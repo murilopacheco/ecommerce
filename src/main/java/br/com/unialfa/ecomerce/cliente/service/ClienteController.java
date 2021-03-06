@@ -35,6 +35,7 @@ public class ClienteController {
         clienteRepositry.deleteById(id);
     }
 
+    // novo commit pelo intellij
 
 }
 
