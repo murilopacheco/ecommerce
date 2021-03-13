@@ -1,8 +1,7 @@
 package br.com.unialfa.ecomerce.cliente.service;
 
+import br.com.unialfa.ecomerce.cliente.business.ClienteBusiness;
 import br.com.unialfa.ecomerce.cliente.domain.Cliente;
-
-import br.com.unialfa.ecomerce.cliente.repository.ClienteRepositry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -11,28 +10,31 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/api/cliente")
 public class ClienteController {
 
-
     @Autowired
-    private ClienteRepositry clienteRepositry;
+    private ClienteBusiness clienteBusiness;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<Cliente> listarCliente(){
-        return clienteRepositry.findAll();
+
+        return clienteBusiness.listarCliente();
     }
 
     @PostMapping(path = "/add")
     public void cadastrarCliente( @RequestBody Cliente cliente ){
-        clienteRepositry.save(cliente);
+
+        clienteBusiness.cadastrarCliente(cliente);
     }
 
     @PutMapping(path = "/edit")
     public void editarCliente( @RequestBody Cliente cliente ){
-        clienteRepositry.save(cliente);
+
+        clienteBusiness.editarCliente(cliente);
     }
 
     @DeleteMapping(value = "/delete/{id}")
     public @ResponseBody void deletarCliente(@PathVariable(name = "id") long id){
-        clienteRepositry.deleteById(id);
+
+        clienteBusiness.deletarCliente(id);
     }
 
     // novo commit pelo intellij
