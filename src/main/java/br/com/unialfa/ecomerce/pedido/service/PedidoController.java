@@ -15,9 +15,11 @@ public class PedidoController {
     @Autowired
     private PedidoRepostory pedidoRepostory;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<Pedido> listarPedido(){
-        return pedidoRepostory.findAll();
+    @GetMapping(path = "/{idCliente}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<Pedido> listarPedido(@PathVariable Long idCliente){
+        Cliente cliente = new Cliente();
+        cliente.setId(idCliente);
+        return pedidoRepostory.findByCliente(cliente);
     }
 
     @PostMapping(path = "/add")

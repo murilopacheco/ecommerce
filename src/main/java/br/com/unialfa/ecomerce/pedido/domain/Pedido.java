@@ -1,13 +1,18 @@
 package br.com.unialfa.ecomerce.pedido.domain;
 
 import br.com.unialfa.ecomerce.cliente.domain.Cliente;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Pedido implements Serializable {
 
     @Id
@@ -24,6 +29,9 @@ public class Pedido implements Serializable {
 
     @ManyToOne
     private Cliente cliente;
+
+    @OneToMany(mappedBy = "id.pedido")
+    private List<ItensPedido> itensPedidos;
 
     public Pedido() {
     }
@@ -90,5 +98,13 @@ public class Pedido implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public List<ItensPedido> getItensPedidos() {
+        return itensPedidos;
+    }
+
+    public void setItensPedidos(List<ItensPedido> itensPedidos) {
+        this.itensPedidos = itensPedidos;
     }
 }
