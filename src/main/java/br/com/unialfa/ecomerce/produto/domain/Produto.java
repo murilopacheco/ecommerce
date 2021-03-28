@@ -1,10 +1,10 @@
 package br.com.unialfa.ecomerce.produto.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import br.com.unialfa.ecomerce.fornecedor.domain.Fornecedor;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 public class Produto {
@@ -18,6 +18,9 @@ public class Produto {
     private byte[] foto;
     private boolean ativo;
 //    private List<String> tags;
+
+    @ManyToMany
+    private List<Fornecedor> fornecedores;
 
     public Produto() {
     }
