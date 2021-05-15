@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.InputMismatchException;
+import java.util.Optional;
 
 @Service
 public class ClienteBusiness {
@@ -19,11 +20,17 @@ public class ClienteBusiness {
         return clienteRepositry.findAll();
     }
 
+    public Optional<Cliente> clientePorId(long id)
+    {
+        return clienteRepositry.findById(id);
+    }
+
     public void cadastrarCliente( Cliente cliente ) {
         if (validarCpf(cliente.getCpf())) {
-            clienteRepositry.save(cliente);
+           clienteRepositry.save(cliente);
         } else{
             System.err.println("cpf inválido");
+//            throw new Exception(Exception e);
         }
     }
 

@@ -3,8 +3,12 @@ package br.com.unialfa.ecomerce.cliente.service;
 import br.com.unialfa.ecomerce.cliente.business.ClienteBusiness;
 import br.com.unialfa.ecomerce.cliente.domain.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/cliente")
@@ -19,10 +23,21 @@ public class ClienteController {
         return clienteBusiness.listarCliente();
     }
 
-    @PostMapping(path = "/add")
-    public void cadastrarCliente( @RequestBody Cliente cliente ){
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Optional<Cliente> clientePorid(@PathVariable(name = "id") long id){
 
-        clienteBusiness.cadastrarCliente(cliente);
+        return clienteBusiness.clientePorId(id);
+    }
+
+    @PostMapping(path = "/add")
+    public ResponseEntity<?> cadastrarCliente(@RequestBody Cliente cliente ){
+        try{
+            clienteBusiness.cadastrarCliente(cliente);
+            return new ResponseEntity<>(cliente, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PutMapping(path = "/edit")
